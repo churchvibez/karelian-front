@@ -3,65 +3,234 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #373c2a;
+  background-color: #024a13; /* Set a background color */
 }
 
 .app {
-  position: absolute;
-  top: 15px;
+  position: relative;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
   width: 960px;
-  height: 1000px;
+  height: 1000px; /* Fixed height of 1000px */
   background-color: #f3f1b9;
+  z-index: 1;
 }
 
-.backgroundContainer {
+.contentPage {
+  position: absolute;
+  top: 190px; /* Adjust according to the height of your header */
+  left: 250px; /* Adjust according to the width of your navigation */
+  bottom: 108px; /* Adjust according to the height of your footer */
+  padding-left: 25px;
+  padding-top: 15px;
+  overflow-y: auto; /* Add vertical scrollbar if content overflows */
+}
+
+
+
+
+
+
+
+
+
+
+// footer components
+
+.footerContainer {
+  background-color: #f3f1b9;
   position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: #ffffff; 
-
-  .backgroundImageOne {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    // background-color: #ffffff; 
-    overflow: hidden;
-    opacity: 0.3;
-  }
-  
-  .backgroundImageOne img {
-    // display: block;
-    vertical-align: bottom;
-    width: 960px;
-    height: 190px;
-    object-fit: cover; 
-  }
-
-  .medal
-  {
-    background-color: transparent;
-  }
+  border-top: 2px solid rgba(0, 0, 0, 0.379);
 }
+
+.footerMedal {
+  position: absolute;
+  top: 55px;
+  right: 320px; /* Adjust as needed */
+  transform: translateY(-50%);
+  transition: transform 0.3s ease; /* Smooth transition for scaling */
+}
+
+.footerMedal img {
+  width: 180px; /* Initial width of the medal */
+}
+
+.footerText {
+  position: absolute;
+  top: 50px;
+  right: 20px; /* Adjusted to be 200px away from the right border */
+  transform: translateY(-50%);
+}
+
+.footerText h2 {
+  font-family: Arial, sans-serif;
+  color: #373c2a;
+  margin: 0; /* Remove default margin */
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+.links {
+  display: flex; /* Align links horizontally */
+  align-items: center; /* Align items vertically */
+}
+
+.links span {
+  margin: 0 5px; /* Adjust space between links */
+}
+
+.footerText a {
+  color: #373c2a;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+
+
+
+
+
+
+
+// left navigation components
 
 .navigation {
-  position: absolute;
-  width: 280px; 
-  height: 680px; 
+  position: relative;
+  width: 250px;
+  height: 700px;
   background-color: #ffffff;
+  border-right: 2px solid rgba(0, 0, 0, 0.379);
+}
+
+.backgroundImageTwo {
+  position: relative;
+  height: 100%;
+  opacity: 0.38;
+}
+
+.backgroundImageTwo img {
+  width: 250px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.navLinks {
+  position: absolute;
+  top: 30px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 200px;
+}
+
+.navLinks a {
+  font-family: Arial, sans-serif;
+  opacity: 1;
+  margin-bottom: 15px;
+  text-decoration: none;
+}
+
+.linkContainer {
+  position: relative; /* Make the link container a positioned parent */
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  text-align: right;
+  margin-right: 15px;
+}
+
+.linkText {
+  font-family: Arial, sans-serif;
+  color: rgb(0, 0, 0);
+  opacity: 1;
+  font-size: 15px;
+  font-weight: bold;
   
-  .backgroundImageTwo {
-    position: absolute;
-    height: 50%; /* Make the background image fill the full height of the navigation bar */
-    opacity: 0.5;
-  }
-  
-  .backgroundImageTwo img {
-    // top: 400px;
-    width: 280px;
-    height: 680px; /* Maintain aspect ratio */
-    object-fit: cover; /* Ensure the image covers the entire container */
-  }
-  
+}
+
+.starIcon {
+  position: absolute; /* Set position to absolute */
+  top: 2.5px; /* Align star to the top of the link container */
+  right: -23px;
+  width: 16px;
+  height: 16px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// header components
+
+.headerContainer {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  background-color: #ffffff;
+  display: flex;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.379);
+}
+
+.backgroundImageOne {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  opacity: 0.45;
+}
+
+.backgroundImageOne img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.headerTextOne {
+  position: absolute;
+  top: 62%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: Arial, sans-serif;
+  color: #373c2a;
+  opacity: 1;
+}
+
+.headerTextTwo {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: Arial, sans-serif;
+  color: rgb(173, 0, 0);
+  opacity: 1;
+  max-width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 12px;
 }
