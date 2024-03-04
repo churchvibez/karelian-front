@@ -17,7 +17,7 @@ html, body {
   z-index: 1;
 }
 
-.contentPage {
+.generalPages {
   position: absolute;
   top: 190px; /* Adjust according to the height of your header */
   left: 250px; /* Adjust according to the width of your navigation */
@@ -25,7 +25,63 @@ html, body {
   padding-left: 25px;
   padding-top: 15px;
   overflow-y: auto; /* Add vertical scrollbar if content overflows */
+  border-top: 2px dotted rgba(0, 0, 0, 0.379);
+  border-left: 2px dotted rgba(0, 0, 0, 0.379);
+  border-bottom: 2px dotted rgba(0, 0, 0, 0.379);
 }
+
+.home {
+  position: relative;
+  display: flex; /* Align items horizontally */
+}
+
+.home img {
+  width: 300px;
+  height: auto;
+  object-fit: cover;
+}
+
+.homePageRightText {
+  margin-left: 20px; /* Adjust spacing between image and text */
+}
+
+.homePageRightText p {
+  font-family: Arial, sans-serif;
+  color: red;
+  text-decoration: underline;
+}
+
+.homePageRightText input[type="text"],
+.homePageRightText button {
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.homePageBottomHeader
+{
+  width: 600px;
+  position: absolute;
+  top: 200px;
+  left: 55px;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  color: rgb(152, 0, 0);
+}
+
+.homeBottomPageText
+{
+  width: 650px;
+  position: absolute;
+  top: 235px;
+  left: 15px;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+  color: rgb(152, 0, 0);
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+}
+
+
 
 
 
@@ -41,7 +97,7 @@ html, body {
 .footerContainer {
   background-color: #f3f1b9;
   position: relative;
-  border-top: 2px solid rgba(0, 0, 0, 0.379);
+  border-top: 2px dotted rgba(0, 0, 0, 0.379);
 }
 
 .footerMedal {
@@ -87,13 +143,6 @@ html, body {
   font-size: 14px;
 }
 
-
-
-
-
-
-
-
 // left navigation components
 
 .navigation {
@@ -101,7 +150,6 @@ html, body {
   width: 250px;
   height: 700px;
   background-color: #ffffff;
-  border-right: 2px solid rgba(0, 0, 0, 0.379);
 }
 
 .backgroundImageTwo {
@@ -159,34 +207,6 @@ html, body {
   height: 16px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // header components
 
 .headerContainer {
@@ -195,7 +215,7 @@ html, body {
   height: 190px;
   background-color: #ffffff;
   display: flex;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.379);
+
 }
 
 .backgroundImageOne {
