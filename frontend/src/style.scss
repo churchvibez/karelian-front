@@ -143,6 +143,10 @@ html, body {
   font-size: 14px;
 }
 
+
+
+
+
 // left navigation components
 
 .navigation {
@@ -166,12 +170,12 @@ html, body {
 
 .navLinks {
   position: absolute;
-  top: 30px;
+  top: 15px;
   right: 15px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 200px;
+  width: 220px;
 }
 
 .navLinks a {
@@ -184,10 +188,15 @@ html, body {
 .linkContainer {
   position: relative; /* Make the link container a positioned parent */
   display: flex;
-  align-items: center;
-  margin-bottom: 5px;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 7px;
   text-align: right;
   margin-right: 15px;
+}
+
+.linkContainer a {
+  margin-bottom: 2px; /* Adjust spacing between links */
 }
 
 .linkText {
@@ -196,7 +205,14 @@ html, body {
   opacity: 1;
   font-size: 15px;
   font-weight: bold;
-  
+}
+
+.linkTextTwo {
+  font-family: Arial, sans-serif;
+  color: rgb(10, 44, 0);
+  opacity: 1;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .starIcon {
@@ -206,6 +222,86 @@ html, body {
   width: 16px;
   height: 16px;
 }
+
+.starIconTwo {
+  position: absolute;
+  top: 24px;
+  right: -23px;
+  width: 16px;
+  height: 16px;
+}
+
+.starIconThree
+{
+  position: absolute;
+  top: 40px;
+  right: -23px;
+  width: 16px;
+  height: 16px;
+}
+
+.starIconFour
+{
+  position: absolute;
+  top: 61px;
+  right: -23px;
+  width: 16px;
+  height: 16px;
+}
+
+.starIconFive
+{
+  position: absolute;
+  top: 81px;
+  right: -23px;
+  width: 16px;
+  height: 16px;
+}
+
+.starIconSix
+{
+  position: absolute;
+  top: 105px;
+  right: -23px;
+  width: 16px;
+  height: 16px;
+}
+
+.starIconSeven
+{
+  position: absolute;
+  top: 140px;
+  right: -23px;
+  width: 16px;
+  height: 16px;
+}
+.starIconEight
+{
+  position: absolute;
+  top: 162px;
+  right: -23px;
+  width: 16px;
+  height: 16px;
+}
+.starIconNine
+{
+  position: absolute;
+  top: 197px;
+  right: -23px;
+  width: 16px;
+  height: 16px;
+}
+.starIconTen
+{
+  position: absolute;
+  top: 225px;
+  right: -23px;
+  width: 16px;
+  height: 16px;
+}
+
+
+
 
 // header components
 
