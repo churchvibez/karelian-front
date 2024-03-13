@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { apiUrl } from '../apiConfig';
+import { homeUrlTitle } from '../apiConfig';
+import MainPage from '../images/mainPage.jpg';
 
 const Home = () => {
-  const [articles, setArticles] = useState([]);
+  const [homeText, setHomeText] = useState('');
 
   useEffect(() => {
-    fetch(apiUrl)
+    fetch(homeUrlTitle)
       .then((response) => response.json())
-      .then((data) => setArticles(data))
-      .catch((error) => console.error('Error fetching data:', error));
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const modifiedText = data[0].a_text.replace(/<img[^>]*src=["'][^"']*\/spacer\.gif["'][^>]*>/gi, '');
+          const finalText = modifiedText.replace(/<img[^>]*src=["'][^"']*["'][^>]*>/gi, `<img src="${MainPage}" alt="Main Page" />`);
+          setHomeText(finalText);
+        }
+      })
+      .catch((error) => console.error('Error fetching articles:', error));
   }, []);
 
   return (
     <div className="generalPages">
-      <div className="home">
-        <h2>Articles:</h2>
-        <ul>
-          {articles.map((article, index) => (
-            <li key={index}>{article.a_title}</li>
-          ))}
-        </ul>
-      </div>
+      <div dangerouslySetInnerHTML={{ __html: homeText }} />
     </div>
   );
 };
