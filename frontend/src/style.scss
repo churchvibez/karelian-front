@@ -3,131 +3,284 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #024a13; /* Set a background color */
+  background-color: #024a13
 }
+
+// entire container
 
 .app {
   position: relative;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  flex-grow: 1;
+  min-height: 700px;
   width: 960px;
-  height: 1000px; /* Fixed height of 1000px */
-  background-color: #f3f1b9;
+  margin: 10px auto;
+  background-color: #EFE8E0;
   z-index: 1;
+  display: flex;
+  flex-direction: column; 
 }
+
+// main page content shown (title, text)
 
 .generalPages {
+  flex-grow: 1; 
+  padding: 15px;
+  min-height: 680px;
+  overflow-y: auto; 
+  margin-top: -710px;
+  margin-left: 270px;
+  margin-right: 30px;
+
+  h1, h2 {
+    font-family: Arial, sans-serif;
+    color: #aa0a09;
+    font-size: 18px; 
+    margin-bottom: 10px;
+  }
+
+  h3
+  {
+    font-family: Arial, sans-serif;
+    color: #aa0a09; 
+    font-size: 14px; 
+    margin-bottom: 10px; 
+  }
+
+  li
+  {
+    font-family: Arial, sans-serif;
+    font-size: 13px; 
+    margin-bottom: 9px;
+  }
+
+  b
+  {
+    font-family: Arial, sans-serif;
+  }
+
+  .articleText {
+    font-family: Arial, sans-serif;
+    font-size: 13px; 
+    color: #000000; 
+    line-height: 1.5;
+    margin-bottom: 20px; 
+  }
+
+}
+
+// subcategories displayed within the page container
+
+.subCategoryList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  li {
+    display: flex;
+    align-items: center; 
+    margin-bottom: 10px;
+
+    &:before {
+      content: "→"; 
+      color: rgb(120, 2, 2); 
+      margin-right: 10px;
+      font-size: 1.3em;
+    }
+
+    a {
+      font-family: Arial, sans-serif;
+      color: #373c2a; 
+      text-decoration: none;
+      font-size: 15px; 
+      font-weight: bold;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.specialLayout {
+  justify-content: center; 
+
+  li {
+    margin: 0 5px 5px;
+  }
+}
+
+// lists for heroes and literature
+
+.heroesList {
+  list-style-type: none;
+
+  li {
+    margin-bottom: 5px; 
+    padding-left: 10px; 
+    position: relative; 
+
+    &:before {
+      content: "★"; 
+      color: rgb(120, 2, 2); 
+      font-size: 1.2em;
+      position: absolute; 
+      left: -15px; 
+      top: 42%; 
+      transform: translateY(-50%);
+    }
+
+    a {
+      color: #373c2a;
+      text-decoration: none; 
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.litList {
+  list-style-type: none;
+
+  li {
+    margin-bottom: 40px; 
+    padding-left: 10px;
+    position: relative; 
+
+    &:before {
+      content: "★"; 
+      color: rgb(120, 2, 2); 
+      font-size: 1.2em; 
+      font-family: arial;
+      position: absolute;
+      left: -15px;
+      top: 11%; 
+      transform: translateY(-50%);
+    }
+
+    a {
+      color: #373c2a;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .desc {
+      margin-top: -10px;
+      
+    }
+  }
+}
+
+// when clicking on an image
+
+.imageModal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4); 
+}
+
+.modalContent {
+  margin: auto;
+  display: block;
+  width: 28%; 
+  max-width: 400px;
+  margin-top: 10%;
+}
+
+.close {
   position: absolute;
-  top: 190px; /* Adjust according to the height of your header */
-  left: 250px; /* Adjust according to the width of your navigation */
-  bottom: 108px; /* Adjust according to the height of your footer */
-  padding-left: 25px;
-  padding-top: 15px;
-  overflow-y: auto; /* Add vertical scrollbar if content overflows */
-  border-top: 2px dotted rgba(0, 0, 0, 0.379);
-  border-left: 2px dotted rgba(0, 0, 0, 0.379);
-  border-bottom: 2px dotted rgba(0, 0, 0, 0.379);
+  top: 15px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.home {
-  position: relative;
-  display: flex; /* Align items horizontally */
+.caption {
+  text-align: center;
+  color: #ccc;
+  margin: 5px 0;
+  font-size: 18px;
 }
 
-.home img {
-  width: 300px;
-  height: auto;
-  object-fit: cover;
-}
+// back button on subcategory pages
 
-.homePageRightText {
-  margin-left: 20px; /* Adjust spacing between image and text */
-}
-
-.homePageRightText p {
-  font-family: Arial, sans-serif;
-  color: red;
-  text-decoration: underline;
-}
-
-.homePageRightText input[type="text"],
-.homePageRightText button {
-  margin-top: 10px;
-  padding: 5px;
-}
-
-.homePageBottomHeader
-{
-  width: 600px;
+.backButton {
   position: absolute;
-  top: 200px;
-  left: 55px;
-  font-size: 12px;
-  font-family: Arial, sans-serif;
-  color: rgb(152, 0, 0);
+  right: 10px;
+  cursor: pointer;
+  background-color: #EFE8E0;
+  border: none;
+  font-size: 30px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #e0e0e0;
+  }
+
+  &:focus {
+    outline: none;
+  }
 }
-
-.homeBottomPageText
-{
-  width: 650px;
-  position: absolute;
-  top: 235px;
-  left: 15px;
-  font-size: 15px;
-  font-family: Arial, sans-serif;
-  color: rgb(152, 0, 0);
-  font-size: 14px;
-  color: rgb(0, 0, 0);
-}
-
-
-
-
-
 
 // footer components
 
+
 .footerContainer {
-  background-color: #f3f1b9;
+  background-color: #EFE8E0;
+  width: 960px;
+  min-height: 100px;
   position: relative;
-  border-top: 2px dotted rgba(0, 0, 0, 0.379);
 }
 
 .footerMedal {
   position: absolute;
   top: 55px;
-  right: 320px; /* Adjust as needed */
+  right: 320px;
   transform: translateY(-50%);
-  transition: transform 0.3s ease; /* Smooth transition for scaling */
+  transition: transform 0.3s ease;
 }
 
 .footerMedal img {
-  width: 180px; /* Initial width of the medal */
+  width: 180px;
 }
 
 .footerText {
   position: absolute;
   top: 50px;
-  right: 20px; /* Adjusted to be 200px away from the right border */
+  right: 20px;
   transform: translateY(-50%);
 }
 
 .footerText h2 {
   font-family: Arial, sans-serif;
   color: #373c2a;
-  margin: 0; /* Remove default margin */
+  margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
 }
 
 .links {
-  display: flex; /* Align links horizontally */
-  align-items: center; /* Align items vertically */
+  display: flex;
+  align-items: center; 
 }
 
 .links span {
-  margin: 0 5px; /* Adjust space between links */
+  margin: 0 5px; 
 }
 
 .footerText a {
@@ -143,154 +296,72 @@ html, body {
   position: relative;
   width: 250px;
   height: 700px;
-  background-color: #ffffff;
+
+  .backgroundImageTwo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.38;
+  }
+
+  .navLinks {
+    position: absolute;
+    top: 25px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 220px;
+  }
+
+  .categoryContainer {
+    margin-bottom: 8px;
+
+    .linkWithStar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      text-align: right;
+      width: 100%;
+    }
+
+    .navLink {
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+      color: rgb(10, 44, 0);
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .starIcon {
+      width: 20px;
+      height: 20px;
+      margin-left: 7px;
+    }
+
+    .subCategoryLink {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      text-align: right;
+      color: #393d30;
+      text-decoration: none;
+      padding-left: 20px; 
+      margin-bottom: 7px; 
+    
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
-.backgroundImageTwo {
-  position: relative;
-  height: 100%;
-  opacity: 0.38;
-}
-
-.backgroundImageTwo img {
-  width: 250px;
-  height: 100%;
-  object-fit: cover;
-}
-
-.navLinks {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 220px;
-}
-
-.navLinks a {
-  font-family: Arial, sans-serif;
-  opacity: 1;
-  margin-bottom: 15px;
-  text-decoration: none;
-}
-
-.linkContainer {
-  position: relative; /* Make the link container a positioned parent */
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  margin-bottom: 7px;
-  text-align: right;
-  margin-right: 15px;
-}
-
-.linkContainer a {
-  margin-bottom: 2px; /* Adjust spacing between links */
-}
-
-.linkText {
-  font-family: Arial, sans-serif;
-  color: rgb(0, 0, 0);
-  opacity: 1;
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.linkTextTwo {
-  font-family: Arial, sans-serif;
-  color: rgb(10, 44, 0);
-  opacity: 1;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.starIcon {
-  position: absolute; /* Set position to absolute */
-  top: 2.5px; /* Align star to the top of the link container */
-  right: -23px;
-  width: 16px;
-  height: 16px;
-}
-
-.starIconTwo {
-  position: absolute;
-  top: 24px;
-  right: -23px;
-  width: 16px;
-  height: 16px;
-}
-
-.starIconThree
-{
-  position: absolute;
-  top: 40px;
-  right: -23px;
-  width: 16px;
-  height: 16px;
-}
-
-.starIconFour
-{
-  position: absolute;
-  top: 61px;
-  right: -23px;
-  width: 16px;
-  height: 16px;
-}
-
-.starIconFive
-{
-  position: absolute;
-  top: 81px;
-  right: -23px;
-  width: 16px;
-  height: 16px;
-}
-
-.starIconSix
-{
-  position: absolute;
-  top: 105px;
-  right: -23px;
-  width: 16px;
-  height: 16px;
-}
-
-.starIconSeven
-{
-  position: absolute;
-  top: 140px;
-  right: -23px;
-  width: 16px;
-  height: 16px;
-}
-.starIconEight
-{
-  position: absolute;
-  top: 162px;
-  right: -23px;
-  width: 16px;
-  height: 16px;
-}
-.starIconNine
-{
-  position: absolute;
-  top: 197px;
-  right: -23px;
-  width: 16px;
-  height: 16px;
-}
-.starIconTen
-{
-  position: absolute;
-  top: 225px;
-  right: -23px;
-  width: 16px;
-  height: 16px;
-}
-
-// header components
+// header
 
 .headerContainer {
   position: relative;

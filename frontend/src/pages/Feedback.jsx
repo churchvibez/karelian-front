@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 
-const Feedback = () => {
-  const [name, setName] = useState("");
+const Feedback = () => 
+{
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event) => 
+  {
     event.preventDefault();
-    console.log("Feedback submitted:", { name, title, description });
-    setName("");
+    const encodedTitle = encodeURIComponent(title);
+    const encodedDescription = encodeURIComponent(description);
+    const mailtoLink = `mailto:leochashchindevelopment@gmail.com?subject=${encodedTitle}&body=${encodedDescription}`;
+    window.location.href = mailtoLink;
     setTitle("");
     setDescription("");
   };
@@ -39,16 +42,7 @@ const Feedback = () => {
       <div>
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="name">Name:</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="title">Title:</label>
+            <label htmlFor="title">Насчет:</label>
             <input
               type="text"
               id="title"
@@ -57,14 +51,14 @@ const Feedback = () => {
             />
           </div>
           <div>
-            <label htmlFor="description">Description:</label>
+            <label htmlFor="description">Описание:</label>
             <textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
-          <button type="submit">Send</button>
+          <button type="submit">Отправить</button>
         </form>
       </div>
     </div>

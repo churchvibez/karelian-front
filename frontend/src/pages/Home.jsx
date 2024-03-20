@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { homeUrlTitle } from '../apiConfig';
+import { baseUrl } from '../apiConfig';
 import MainPage from '../images/mainPage.jpg';
 
-const Home = () => {
+const Home = () => 
+{
   const [homeText, setHomeText] = useState('');
 
-  useEffect(() => {
-    fetch(homeUrlTitle)
+  useEffect(() => 
+  {
+    fetch(`${baseUrl}/home/article/title/33`)
       .then((response) => response.json())
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
+      .then((data) => 
+      {
+        if (Array.isArray(data) && data.length > 0) 
+        {
           const modifiedText = data[0].a_text.replace(/<img[^>]*src=["'][^"']*\/spacer\.gif["'][^>]*>/gi, '');
           const finalText = modifiedText.replace(/<img[^>]*src=["'][^"']*["'][^>]*>/gi, `<img src="${MainPage}" alt="Main Page" />`);
           setHomeText(finalText);

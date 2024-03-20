@@ -12,11 +12,11 @@ const Footer = () => {
                 <h2>© Чащин Леонид Михайлович</h2>
                 <h2>Петрозаводский государственный университет</h2>
             <div className="links">
-                <Link to="/About">О проекте</Link>
+                <Link to="/site/about">О проекте</Link>
                 <span>|</span>
-                <Link to="/Links">Ссылки</Link>
+                <Link to="/site/links">Ссылки</Link>
                 <span>|</span>
-                <Link to="/Feedback">Обратная связь</Link>
+                <Link to="/site/feedback">Обратная связь</Link>
             </div>
         </div>
     </div>

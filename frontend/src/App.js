@@ -1,18 +1,13 @@
 import React from "react"
 import {createBrowserRouter, RouterProvider, Outlet} from "react-router-dom"
-
 import Home from './pages/Home'
-import About from './pages/About'
-import Links from './pages/Links'
 import Feedback from './pages/Feedback'
-
-import ContentPage from "./ContentPage"
-import ContentPageMultiple from "./ContentPageMultiple"
-
+import SearchResults from "./pages/SearchResults"
+import ContentPage from "./pages/ContentPage"
+import ContentPageMultiple from "./pages/ContentPageMultiple"
 import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import Header from './components/Header'
-
 import './style.scss'
 
 const Layout = () => {
@@ -47,20 +42,16 @@ const router = createBrowserRouter
       {
         path: "/site/:param1/:param2",
         element: <ContentPageMultiple />
-      }
+      },
+      {
+        path: "/site/bd/search",
+        element: <SearchResults/>
+      },
+      {
+        path: "/site/feedback",
+        element: <Feedback/>
+      },
     ]
-  },
-  {
-    path: "/site/about",
-    element: <About/>
-  },
-  {
-    path: "/site/links",
-    element: <Links/>
-  },
-  {
-    path: "/site/feedback",
-    element: <Feedback/>
   },
 ])
 
@@ -73,6 +64,5 @@ function App() {
     </div>
   )
 }
-
 
 export default App
