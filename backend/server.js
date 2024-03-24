@@ -149,7 +149,7 @@ app.get('/paths/:paramOne/:paramTwo', (req, res) => {
 
       fetchTitleFirst().then(() => {
         connection.query(
-          'SELECT a_title, a_text, a_desc FROM article WHERE c_id = ?',
+          'SELECT a_id, a_title, a_text, a_desc FROM article WHERE c_id = ?',
           [cId],
           (error, articles) => {
             if (error) {
