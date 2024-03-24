@@ -109,7 +109,7 @@ const SearchResults = () =>
 
 
       {soldiers.map((soldier, index) => (
-        <div key={index} style={{ marginBottom: "20px" }}> {/* Added space between soldiers */}
+        <div key={index} style={{ marginBottom: "20px" }}>
           <h3>{[soldier.s_surname, soldier.s_name, soldier.s_fathername].filter(Boolean).join(' ')}</h3>
           <ul>
             {soldier.s_birthyear && <li>Дата рождения: {soldier.s_birthyear}</li>}

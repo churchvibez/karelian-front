@@ -60,12 +60,10 @@ const ContentPageMultiple = () =>
         if (url) {
           const response = await fetch(url);
           const data = await response.json();
-          // Check if data has a title property
           if (data.title) {
             setPageTitle(data.title);
-            setContent(data.articles || []); // Ensure content is set to articles array or an empty array
+            setContent(data.articles || []);
           } else {
-            // Handle cases where data might not fit expected structure
             setContent(Array.isArray(data) ? data : [data]);
           }
         }

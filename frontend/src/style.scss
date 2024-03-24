@@ -58,7 +58,7 @@ html, body {
     font-size: 13px;
     margin-bottom: 3px;
     a, a:visited {
-    color: #000; // Black color for links
+    color: #000;
     }
     }
     
@@ -74,7 +74,7 @@ html, body {
     margin-bottom: 20px;
 
     a:hover {
-      text-decoration: underline; // Optional: underline on hover for links within articleText
+      text-decoration: underline; 
     }
   }
 
@@ -94,14 +94,13 @@ html, body {
     margin-left: 70px;
   }
 
-  // Targeting all anchor tags within generalPages to ensure they are black
   a, a:visited {
-    color: #000; // Ensures all links are black by default
-    text-decoration: none; // Optional: removes underline from links
-    text-decoration: underline; // Optional: underline on hover
+    color: #000; 
+    text-decoration: none; 
+    text-decoration: underline;
 
     &:hover {
-      text-decoration: underline; // Optional: underline on hover
+      text-decoration: underline;
     }
   }
 }
