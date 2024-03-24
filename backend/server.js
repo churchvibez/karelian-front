@@ -105,43 +105,73 @@ app.get('/paths/:pathName', (req, res) =>
   );
 });
 
-app.get('/paths/:paramOne/:paramTwo', (req, res) => 
-{
+app.get('/paths/:paramOne/:paramTwo', (req, res) => {
   const { paramOne, paramTwo } = req.params;
   const fullPath = `/${paramOne}/${paramTwo}/`;
-  console.log('Full path:', fullPath);
   connection.query(
-      'SELECT p_path FROM path WHERE p_name = ?',
-      [fullPath],
-      (error, results) => 
-      {
-          if (error) 
-          {
-              console.error('Error finding path:', error);
-              return res.status(500).json({ error: 'Internal server error' });
-          }
-          if (results.length === 0) 
-          {
-              return res.status(404).json({ error: 'Path not found' });
-          }
-          const pPathArray = results[0].p_path.split(',');
-          const cId = parseInt(pPathArray[pPathArray.length - 1], 10);
-          connection.query(
-              'SELECT a_id, a_title, a_text, a_desc FROM article WHERE c_id = ?',
-              [cId],
-              (error, articles) => 
-              {
-                  if (error) 
-                  {
-                      console.error('Error fetching articles:', error);
-                      return res.status(500).json({ error: 'Internal server error' });
-                  }
-                  res.json(articles);
-              }
-          );
+    'SELECT p_path FROM path WHERE p_name = ?',
+    [fullPath],
+    (error, pathResults) => {
+      if (error) {
+        console.error('Error finding path:', error);
+        return res.status(500).json({ error: 'Internal server error' });
       }
+      if (pathResults.length === 0) {
+        return res.status(404).json({ error: 'Path not found' });
+      }
+
+      const pPathArray = pathResults[0].p_path.split(',');
+      const cId = parseInt(pPathArray[pPathArray.length - 1], 10);
+      let title = '';
+      const fetchTitleFirst = async () => {
+        if ([52, 83].includes(cId)) {
+          return new Promise((resolve, reject) => {
+            connection.query(
+              'SELECT c_name_rus FROM category WHERE c_id = ?',
+              [cId],
+              (error, categoryResults) => {
+                if (error) {
+                  console.error('Error fetching category title:', error);
+                  reject(error);
+                } else if (categoryResults.length > 0) {
+                  title = categoryResults[0].c_name_rus;
+                  resolve();
+                } else {
+                  reject('Category not found');
+                }
+              }
+            );
+          });
+        } else {
+          return Promise.resolve();
+        }
+      };
+
+      fetchTitleFirst().then(() => {
+        connection.query(
+          'SELECT a_title, a_text, a_desc FROM article WHERE c_id = ?',
+          [cId],
+          (error, articles) => {
+            if (error) {
+              console.error('Error fetching articles:', error);
+              return res.status(500).json({ error: 'Internal server error' });
+            }
+
+            const responseJson = {
+              title: title || (articles.length > 0 ? articles[0].a_title : ''),
+              articles: articles
+            };
+            res.json(responseJson);
+          }
+        );
+      }).catch(error => {
+        console.error('Error processing request:', error);
+        res.status(500).json({ error: 'Internal server error' });
+      });
+    }
   );
 });
+
 
 // title and text for every page with article within the URL
 
@@ -267,22 +297,18 @@ app.get('/subcategories/:parentId', (req, res) =>
 
 // title, text and files if existing for subcategory pages
 
-app.get('/path-details/:pathName', (req, res) => 
-{
+app.get('/path-details/:pathName', (req, res) => {
   const pathName = `/${req.params.pathName}/`;
   connection.query(
     'SELECT p_path FROM path WHERE p_name = ?',
     [pathName],
-    (error, results) => 
-    {
-      if (error) 
-      {
+    (error, results) => {
+      if (error) {
         console.error('Error executing query:', error);
         res.status(500).json({ error: 'Internal server error' });
         return;
       }
-      if (results.length === 0) 
-      {
+      if (results.length === 0) {
         res.status(404).json({ error: 'Path not found' });
         return;
       }
@@ -292,70 +318,73 @@ app.get('/path-details/:pathName', (req, res) =>
       const x = pathParts[pathParts.length - 1];
 
       connection.query(
-        'SELECT c_name_rus FROM category WHERE c_id = ?',
+        'SELECT a_title, a_text FROM article WHERE c_id = ?',
         [x],
-        (error, categoryResults) => 
-        {
-          if (error) 
-          {
-            console.error('Error executing category query:', error);
+        (error, articleResults) => {
+          if (error) {
+            console.error('Error executing article query:', error);
             res.status(500).json({ error: 'Internal server error' });
             return;
           }
-          if (categoryResults.length === 0) {
-            res.status(404).json({ error: 'Category not found' });
-            return;
-          }
-          connection.query(
-            'SELECT a_title, a_text FROM article WHERE c_id = ?',
-            [x],
-            (error, articleResults) => 
-            {
-              if (error) 
-              {
-                console.error('Error executing article query:', error);
-                res.status(500).json({ error: 'Internal server error' });
-                return;
-              }
-              
-              let responseData = 
-              {
-                title: categoryResults[0].c_name_rus,
-                articles: articleResults.map(article => ({
-                  a_title: article.a_title,
-                  a_text: article.a_text
-                })),
-                c_id: x
-              };
+          if (articleResults.length > 0) {
+            let responseData = {
+              title: articleResults[0].a_title,
+              articles: articleResults.map(article => ({
+                a_title: article.a_title,
+                a_text: article.a_text
+              })),
+              c_id: x
+            };
+            addFilesIfNeeded(x, responseData, res);
+          } else {
+            connection.query(
+              'SELECT c_name_rus FROM category WHERE c_id = ?',
+              [x],
+              (error, categoryResults) => {
+                if (error) {
+                  console.error('Error executing category query:', error);
+                  res.status(500).json({ error: 'Internal server error' });
+                  return;
+                }
+                if (categoryResults.length === 0) {
+                  res.status(404).json({ error: 'Category not found' });
+                  return;
+                }
 
-              if (x === '53') 
-              {
-                connection.query(
-                  'SELECT title, http_path FROM file WHERE id BETWEEN 8 AND 33',
-                  (error, fileResults) => 
-                  {
-                    if (error) 
-                    {
-                      console.error('Error executing file query:', error);
-                      res.status(500).json({ error: 'Internal server error' });
-                      return;
-                    }
-                    responseData.files = fileResults;
-                    res.json(responseData);
-                  }
-                );
-              } 
-              else 
-              {
-                res.json(responseData);
+                let responseData = {
+                  title: categoryResults[0].c_name_rus,
+                  articles: [],
+                  c_id: x
+                };
+                addFilesIfNeeded(x, responseData, res);
               }
-            }
-          );
+            );
+          }
         }
       );
     }
   );
 });
+
+function addFilesIfNeeded(c_id, responseData, res) {
+  if (c_id === '53') {
+    connection.query(
+      'SELECT title, http_path FROM file WHERE id BETWEEN 8 AND 33',
+      (error, fileResults) => {
+        if (error) {
+          console.error('Error executing file query:', error);
+          res.status(500).json({ error: 'Internal server error' });
+          return;
+        }
+        responseData.files = fileResults;
+        res.json(responseData);
+      }
+    );
+  } else {
+    res.json(responseData);
+  }
+}
+
 
 // bibliography letters
 
