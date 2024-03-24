@@ -165,8 +165,8 @@ const ContentPage = () =>
           <h2>{pathInfo.title}</h2>
           <ul className={`subCategoryList ${isSpecialLayoutNeeded() ? 'specialLayout' : ''}`}>
             {subCategories.map((category, index) => (
-              <li key={index}>
-                <a href={category.link}>{category.c_name_rus}</a>
+              <li style={{ color: 'black' }} key={index}>
+                <a href={category.link} style={{ color: 'black' }}>{category.c_name_rus}</a>
               </li>
             ))}
           </ul>
@@ -177,8 +177,8 @@ const ContentPage = () =>
           ))}
           <ul>
             {files.map((file, index) => (
-              <li key={index}>
-                <a href={file.http_path}>{file.title}</a>
+              <li style={{ color: 'black' }} key={index}>
+                <a href={file.http_path} style={{ color: 'black' }}>{file.title}</a>
               </li>
             ))}
           </ul>
@@ -188,16 +188,14 @@ const ContentPage = () =>
         <>
           <h2>Литература о войне</h2>
           <ul className="litList">
-            {literature.map((item, index) => {
-              return (
-                <li key={index}>
-                  <Link to={`/site/article/${item.a_id}`}>
-                    <span dangerouslySetInnerHTML={{ __html: item.a_title.trim() }} />
-                  </Link>
-                  <div className="desc" dangerouslySetInnerHTML={{ __html: item.a_desc.trim() }} />
-                </li>
-              );
-            })}
+            {literature.map((item, index) => (
+              <li style={{ color: 'black' }} key={index}>
+                <Link to={`/site/article/${item.a_id}`} style={{ color: 'black' }}>
+                  <span dangerouslySetInnerHTML={{ __html: item.a_title.trim() }} />
+                </Link>
+                <div className="desc" dangerouslySetInnerHTML={{ __html: item.a_desc.trim() }} />
+              </li>
+            ))}
           </ul>
         </>
       )}
@@ -206,8 +204,8 @@ const ContentPage = () =>
           <h2>Герои Советского Союза</h2>
           <ul className="heroesList">
             {soldiers.map((soldier, index) => (
-              <li key={index}>
-                <Link to={`/site/article/${soldier.a_id}`}>
+              <li style={{ color: 'black' }} key={index}>
+                <Link to={`/site/article/${soldier.a_id}`} style={{ color: 'black' }}>
                   {soldier.a_title}
                 </Link>
               </li>
@@ -218,6 +216,7 @@ const ContentPage = () =>
       )}
     </div>
   );
+  
 };
 
 export default ContentPage;

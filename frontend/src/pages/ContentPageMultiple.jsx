@@ -56,17 +56,20 @@ const ContentPageMultiple = () =>
       
       adjustPageTitleBasedOnPath();
     
-      try 
-      {
-        if (url) 
-        {
+      try {
+        if (url) {
           const response = await fetch(url);
           const data = await response.json();
-          setContent(data);
+          // Check if data has a title property
+          if (data.title) {
+            setPageTitle(data.title);
+            setContent(data.articles || []); // Ensure content is set to articles array or an empty array
+          } else {
+            // Handle cases where data might not fit expected structure
+            setContent(Array.isArray(data) ? data : [data]);
+          }
         }
-      } 
-      catch (error) 
-      {
+      } catch (error) {
         console.error('Error fetching content:', error);
       }
     };
@@ -102,6 +105,7 @@ const ContentPageMultiple = () =>
     fetchContent();
     fetchSpecificFiles();
   }, [param1, param2, location.pathname, location.search]);
+
 
   const handleImageClick = (src) => 
   {
@@ -219,7 +223,7 @@ const ContentPageMultiple = () =>
               <div dangerouslySetInnerHTML={{ __html: item.a_text }} />
             </>
           ) : shouldDisplayTitle() && !location.pathname.includes('/site/photo/') ? (
-            <Link to={`/site/article/${item.a_id}`}>
+            <Link to={`/site/article/${item.a_id}`} style={{ color: 'black' }}>
               <h3 dangerouslySetInnerHTML={{ __html: item.a_title }} />
             </Link>
           ) : null}
@@ -236,7 +240,7 @@ const ContentPageMultiple = () =>
         <ul>
           {files.map((file, index) => (
             <li key={index}>
-              <a href={file.http_path} target="_blank" rel="noopener noreferrer">{file.title}</a>
+              <a href={file.http_path} target="_blank" rel="noopener noreferrer" style={{ color: 'black' }}>{file.title}</a>
             </li>
           ))}
         </ul>
@@ -249,6 +253,7 @@ const ContentPageMultiple = () =>
       )}
     </div>
   );
+  
 };
 
 export default ContentPageMultiple;

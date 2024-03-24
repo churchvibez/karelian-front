@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 
-const Feedback = () => 
-{
+const Feedback = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (event) => 
-  {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const encodedTitle = encodeURIComponent(title);
     const encodedDescription = encodeURIComponent(description);
@@ -36,29 +34,31 @@ const Feedback = () =>
           Если Вы хотите сообщить о неточностях, которые Вы нашли в базе
           данных, или дополнительную информацию, пожалуйста, заполните форму
           ниже. Или Вы можете отправить электронное письмо непосредственно по
-          адресу: <a href="leochashchindevelopment@gmail.com">leochashchindevelopment@gmail.com</a>
+          адресу: <a href="mailto:leochashchindevelopment@gmail.com">leochashchindevelopment@gmail.com</a>
         </p>
       </div>
       <div>
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="title">Насчет:</label>
+            <label className="feedbackTitle" htmlFor="title">Насчет:</label>
             <input
               type="text"
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              style={{ width: "500px", height: "20px" }}
             />
           </div>
-          <div>
-            <label htmlFor="description">Описание:</label>
+          <div style={{ marginBottom: "50px" }}>
+            <label classname="feedbackDesc" htmlFor="description">Описание:</label>
             <textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              style={{ width: "500px", height: "200px" }}
             />
           </div>
-          <button type="submit">Отправить</button>
+          <button className="feedbackButton" type="submit" style={{ display: "block", marginTop: "50px" }}>Отправить</button>
         </form>
       </div>
     </div>

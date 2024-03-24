@@ -87,14 +87,26 @@ const SearchResults = () =>
             ←
           </button>    
         </div>
-      <h2>Результаты Поиска</h2>
+      
 
-      <form onSubmit={handleSubmit}>
-        <label>Фамилия: <input type="text" value={inputSurname} onChange={e => setInputSurname(e.target.value)} /></label>
-        <label>Имя: <input type="text" value={inputName} onChange={e => setInputName(e.target.value)} /></label>
-        <label>Отчество: <input type="text" value={inputFathername} onChange={e => setInputFathername(e.target.value)} /></label>
-        <button type="submit">Поиск</button>
+      <div className="searchFormContainer">
+      <form className="searchForm" onSubmit={handleSubmit}>
+        <div className="inputGroup">
+          <label htmlFor="surname">Фамилия:</label>
+          <input id="surname" type="text" value={inputSurname} onChange={e => setInputSurname(e.target.value)} />
+        </div>
+        <div className="inputGroup">
+          <label htmlFor="name">Имя:</label>
+          <input id="name" type="text" value={inputName} onChange={e => setInputName(e.target.value)} />
+        </div>
+        <div className="inputGroup">
+          <label htmlFor="fathername">Отчество:</label>
+          <input id="fathername" type="text" value={inputFathername} onChange={e => setInputFathername(e.target.value)} />
+        </div>
+        <button className="submitButton" type="submit">Submit Query</button>
       </form>
+    </div>
+
 
       {soldiers.map((soldier, index) => (
         <div key={index} style={{ marginBottom: "20px" }}> {/* Added space between soldiers */}
