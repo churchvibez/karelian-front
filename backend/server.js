@@ -105,7 +105,9 @@ app.get('/paths/:pathName', (req, res) =>
   );
 });
 
-app.get('/paths/:paramOne/:paramTwo', (req, res) => {
+
+app.get('/paths/:paramOne/:paramTwo', (req, res) => 
+{
   const { paramOne, paramTwo } = req.params;
   const fullPath = `/${paramOne}/${paramTwo}/`;
   connection.query(
@@ -124,7 +126,7 @@ app.get('/paths/:paramOne/:paramTwo', (req, res) => {
       const cId = parseInt(pPathArray[pPathArray.length - 1], 10);
       let title = '';
       const fetchTitleFirst = async () => {
-        if ([52, 83].includes(cId)) {
+        if ([52, 83, 86, 87].includes(cId)) {
           return new Promise((resolve, reject) => {
             connection.query(
               'SELECT c_name_rus FROM category WHERE c_id = ?',
@@ -171,7 +173,6 @@ app.get('/paths/:paramOne/:paramTwo', (req, res) => {
     }
   );
 });
-
 
 // title and text for every page with article within the URL
 
@@ -520,6 +521,107 @@ app.get('/soldiers/search', async (req, res) =>
   catch (error) 
   {
     console.error('Error fetching search results:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// location title for one parameter in URL
+
+app.get('/category-title/:categoryName', (req, res) => 
+{
+  const categoryName = req.params.categoryName;
+  connection.query(
+    'SELECT c_name_rus FROM category WHERE c_name = ?',
+    [categoryName],
+    (error, results) => {
+      if (error) {
+        console.error('Error fetching category title:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+      if (results.length === 0) {
+        return res.status(404).json({ error: 'Category not found' });
+      }
+      res.json(results[0]);
+    }
+  );
+});
+
+// location title for multiple parameters in URL
+
+app.get('/category-titles/:paramOne/:paramTwo', async (req, res) => 
+{
+  const { paramOne, paramTwo } = req.params;
+  try {
+    const [categoryOneResults] = await connection.promise().query(
+      'SELECT c_id, c_name_rus FROM category WHERE c_name = ?',
+      [paramOne]
+    );
+    if (categoryOneResults.length === 0) {
+      return res.status(404).json({ error: 'Category for paramOne not found' });
+    }
+    let { c_id: paramOneCId, c_name_rus: categoryOneTitle } = categoryOneResults[0];
+    if (paramOneCId === 51) {
+      paramOneCId = 45;
+    }
+    const [categoryTwoResults] = await connection.promise().query(
+      'SELECT c_name_rus FROM category WHERE c_name = ? AND c_parent_id = ?',
+      [paramTwo, paramOneCId]
+    );
+    const categoryTwoTitle = categoryTwoResults.length > 0 ? categoryTwoResults[0].c_name_rus : 'Not Found';
+    res.json({ categoryOneTitle, categoryTwoTitle });
+  } catch (error) {
+    console.error('Error fetching category titles:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// location title for anything article related
+
+app.get('/article-category/:articleId', async (req, res) => 
+{
+  const { articleId } = req.params;
+  let response = { param1: 'Not Found', param2: 'Not Found' };
+  try 
+  {
+    const [articleResults] = await connection.promise().query(
+      'SELECT c_id FROM article WHERE a_id = ?',
+      [articleId]
+    );
+    if (articleResults.length === 0) 
+    {
+      return res.status(404).json({ error: 'Article not found' });
+    }
+    const articleCId = articleResults[0].c_id;
+    const [categoryResults] = await connection.promise().query(
+      'SELECT c_name_rus, c_parent_id FROM category WHERE c_id = ?',
+      [articleCId]
+    );
+    if (categoryResults.length === 0) 
+    {
+      return res.status(404).json({ error: 'Category not found' });
+    }
+    const { c_name_rus, c_parent_id } = categoryResults[0];
+    response.param2 = c_name_rus;
+    if (c_parent_id !== 1) 
+    { 
+      const [parentCategoryResults] = await connection.promise().query(
+        'SELECT c_name_rus FROM category WHERE c_id = ?',
+        [c_parent_id]
+      );
+
+      if (parentCategoryResults.length > 0) 
+      {
+        response.param1 = parentCategoryResults[0].c_name_rus;
+      }
+    } 
+    else 
+    {
+      response.param1 = c_name_rus;
+    }
+
+    res.json(response);
+  } catch (error) {
+    console.error('Error fetching article category details:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

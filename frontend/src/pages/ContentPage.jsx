@@ -16,7 +16,9 @@ const ContentPage = () =>
   const [soldiers, setSoldiers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(0); 
-  const [literature, setLiterature] = useState([]) 
+  const [literature, setLiterature] = useState([]);
+  const [categoryTitle, setCategoryTitle] = useState('');
+
   
   useEffect(() => 
   {
@@ -25,6 +27,16 @@ const ContentPage = () =>
     const queryParams = queryString.parse(location.search);
     const updatedPage = parseInt(queryParams.page, 10) || 1;
     setCurrentPage(updatedPage);
+    const fetchCategoryTitleFromPath = () => {
+      const pathSegments = location.pathname.split('/');
+      const siteIndex = pathSegments.findIndex(segment => segment === 'site');
+      const categorySegment = pathSegments[siteIndex + 1];
+      if (categorySegment) {
+        fetchCategoryTitle(categorySegment);
+      }
+    };
+
+    fetchCategoryTitleFromPath();
 
     if(location.pathname === '/site/biblio') 
     {
@@ -52,7 +64,17 @@ const ContentPage = () =>
     return () => {
       setFiles([]);
     };
-  }, [pathName, currentPage, location.search]);
+  }, [pathName, currentPage, location.search, location.pathname]);
+
+  const fetchCategoryTitle = (categoryName) => {
+    fetch(`${baseUrl}/category-title/${categoryName}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setCategoryTitle(data.c_name_rus);
+      })
+      .catch(error => console.error('Error fetching category title:', error));
+  };
 
   const fetchLiterature = () => 
   {
@@ -160,6 +182,9 @@ const ContentPage = () =>
     
   return (
     <div className="generalPages">
+      {categoryTitle && (
+        <p className="location">{`> ${categoryTitle}`}</p>
+      )}
       {pathInfo && !pathName.includes('heroes') && !pathName.includes('lit') ? (
         <div>
           <h2>{pathInfo.title}</h2>

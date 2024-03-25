@@ -13,6 +13,8 @@ const ContentPageMultiple = () =>
   const [files, setFiles] = useState([]);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState('');
+  const [categoryTitles, setCategoryTitles] = useState({ categoryOneTitle: '', categoryTwoTitle: '' });
+
   const letterMappingAbbreviations = 
   {
     A: 'А', B: 'Б', V: 'В', G: 'Г', D: 'Д', J: 'Е', ZH: 'Ж', Z: 'З',
@@ -100,10 +102,58 @@ const ContentPageMultiple = () =>
       }
     };
 
+    const pathSegments = location.pathname.split('/');
+  if (pathSegments.includes('article')) {
+    const articleIdIndex = pathSegments.findIndex(segment => segment === 'article');
+    if (articleIdIndex !== -1 && pathSegments.length > articleIdIndex + 1) {
+      const articleId = pathSegments[articleIdIndex + 1];
+      fetchArticleCategory(articleId);
+    }
+  } else {
+    const categoryIndex = pathSegments.indexOf('site') + 1;
+    if (categoryIndex > 0 && pathSegments.length >= categoryIndex + 2) {
+      const paramOne = pathSegments[categoryIndex];
+      const paramTwo = pathSegments[categoryIndex + 1];
+      fetchCategoryTitles(paramOne, paramTwo);
+    }
+  }
+
     fetchContent();
     fetchSpecificFiles();
   }, [param1, param2, location.pathname, location.search]);
 
+
+  const fetchArticleCategory = (articleId) => {
+    fetch(`${baseUrl}/article-category/${articleId}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.param1 && data.param2 && data.param1 !== data.param2) {
+          setCategoryTitles({ categoryOneTitle: data.param1, categoryTwoTitle: data.param2 });
+        } else if (data && data.param1) {
+          setCategoryTitles({ categoryOneTitle: data.param1, categoryTwoTitle: '' });
+        } else {
+          setCategoryTitles({ categoryOneTitle: 'Not Found', categoryTwoTitle: '' });
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching article category:', error);
+        setCategoryTitles({ categoryOneTitle: 'Not Found', categoryTwoTitle: '' });
+      });
+  };
+  
+  const fetchCategoryTitles = (paramOne, paramTwo) => {
+    fetch(`${baseUrl}/category-titles/${paramOne}/${paramTwo}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.categoryOneTitle !== data.categoryTwoTitle) {
+          setCategoryTitles({ categoryOneTitle: data.categoryOneTitle, categoryTwoTitle: data.categoryTwoTitle });
+        } else {
+          setCategoryTitles({ categoryOneTitle: data.categoryOneTitle, categoryTwoTitle: '' });
+        }
+        localStorage.setItem('lastCategoryTitles', JSON.stringify(data));
+      })
+      .catch(error => console.error('Error fetching category titles:', error));
+  };
 
   const handleImageClick = (src) => 
   {
@@ -205,6 +255,9 @@ const ContentPageMultiple = () =>
 
   return (
     <div className="generalPages">
+    <p className="location">
+      {`> ${categoryTitles.categoryOneTitle}`}{categoryTitles.categoryTwoTitle && ` > ${categoryTitles.categoryTwoTitle}`}
+    </p>
       {!(location.pathname.includes('/site/abbreviation') || location.pathname.includes('/site/biblio')) && (
         <div>
           <button className="backButton" onClick={() => navigate(-1)}>

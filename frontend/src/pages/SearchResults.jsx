@@ -82,6 +82,7 @@ const SearchResults = () =>
 
   return (
     <div className="generalPages">
+      <p className="location">{`> База данных`}</p>
       <div>
           <button className="backButton" onClick={() => navigate(-1)}>
             ←

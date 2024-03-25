@@ -16,6 +16,7 @@ const Feedback = () => {
 
   return (
     <div className="generalPages">
+      <p className="location">{`> Обратная связь`}</p>
       <div>
         <h2>Обратная связь</h2>
       </div>
