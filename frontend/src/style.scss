@@ -33,14 +33,14 @@ html, body {
 
   h1, h2 {
     font-family: Arial, sans-serif;
-    color: #aa0a09;
+    color: #af0d0d;
     font-size: 18px; 
     margin-bottom: 10px;
   }
 
   h3 {
     font-family: Arial, sans-serif;
-    color: #aa0a09; 
+    color: #af0d0d; 
     font-size: 14px; 
     margin-bottom: 10px; 
   }
@@ -92,16 +92,16 @@ html, body {
   {
     margin-left: 19px;
   }
+  
+  .feedbackButton
+  {
+    margin-left: 70px;
+  }
 
   .feedbackDesc
   {
     width: 300px;
     height: 300px;
-  }
-  
-  .feedbackButton
-  {
-    margin-left: 70px;
   }
 
   a, a:visited {
@@ -114,8 +114,6 @@ html, body {
     }
   }
 }
-  
-
   
   .searchFormContainer {
     display: flex;
@@ -135,15 +133,15 @@ html, body {
       align-items: flex-start;
       font-family: Arial;
   
-      label {
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
-  
       input[type="text"] {
         padding: 5px;
         font-size: 12px;
         border: 1px solid #ccc;
+      }
+
+      label {
+        font-weight: bold;
+        margin-bottom: 5px;
       }
     }
   
@@ -155,43 +153,6 @@ html, body {
       margin-top: 25px;
     }
   }
-  
-
-// subcategories displayed within the page container
-
-.subCategoryList {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  li {
-    display: flex;
-    align-items: center; 
-    margin-bottom: 10px;
-
-    &:before {
-      content: "→"; 
-      color: rgb(120, 2, 2); 
-      margin-right: 10px;
-      font-size: 1.3em;
-    }
-
-    a {
-      font-family: Arial, sans-serif;
-      color: #373c2a; 
-      text-decoration: none;
-      font-size: 15px; 
-      font-weight: bold;
-      
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-}
 
 .specialLayout {
   justify-content: center; 
@@ -201,29 +162,34 @@ html, body {
   }
 }
 
-// lists for heroes and literature
 
-.heroesList {
+// subcategories displayed within the page container
+.subCategoryList {
+  flex-direction: column;
+  align-items: flex-start;
   list-style-type: none;
+  margin: 0;
+  display: flex;
+  padding: 0;
 
   li {
-    margin-bottom: 5px; 
-    padding-left: 10px; 
-    position: relative; 
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center; 
 
     &:before {
-      content: "★"; 
+      content: "→"; 
+      margin-right: 10px;
+      font-size: 1.3em;
       color: rgb(120, 2, 2); 
-      font-size: 1.2em;
-      position: absolute; 
-      left: -15px; 
-      top: 42%; 
-      transform: translateY(-50%);
     }
 
     a {
-      color: #373c2a;
-      text-decoration: none; 
+      font-family: Arial, sans-serif;
+      color: #373c2a; 
+      text-decoration: none;
+      font-size: 15px; 
+      font-weight: bold;
       
       &:hover {
         text-decoration: underline;
@@ -263,6 +229,36 @@ html, body {
     .desc {
       margin-top: -10px;
       
+    }
+  }
+}
+
+// lists for heroes and literature
+.heroesList {
+  list-style-type: none;
+
+  li {
+    position: relative; 
+    margin-bottom: 5px; 
+    padding-left: 10px; 
+
+    &:before {
+      content: "★"; 
+      position: absolute; 
+      color: rgb(120, 2, 2); 
+      font-size: 1.2em;
+      top: 42%; 
+      left: -15px; 
+      transform: translateY(-50%);
+    }
+
+    a {
+      color: #373c2a;
+      text-decoration: none; 
+      
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
@@ -327,21 +323,11 @@ html, body {
 }
 
 // footer components
-
-
 .footerContainer {
   background-color: #EFE8E0;
   width: 960px;
   min-height: 100px;
   position: relative;
-}
-
-.footerMedal {
-  position: absolute;
-  top: 55px;
-  right: 320px;
-  transform: translateY(-50%);
-  transition: transform 0.3s ease;
 }
 
 .footerMedal img {
@@ -350,24 +336,32 @@ html, body {
 
 .footerText {
   position: absolute;
+  transform: translateY(-50%);
   top: 50px;
   right: 20px;
-  transform: translateY(-50%);
 }
 
 .footerText h2 {
   font-family: Arial, sans-serif;
-  color: #373c2a;
+  color: #3d422e;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
 }
 
 .footerText a {
-  color: #373c2a;
+  color: 3d422e;
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
+}
+
+.footerMedal {
+  position: absolute;
+  top: 55px;
+  right: 320px;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
 }
 
 // navigation components
@@ -385,17 +379,23 @@ html, body {
   }
 
   .navLinks {
-    position: absolute;
-    top: 25px;
-    right: 15px;
     display: flex;
-    flex-direction: column;
+    position: absolute;
     align-items: flex-end;
+    flex-direction: column;
     width: 220px;
+    right: 15px;
+    top: 25px;
   }
 
   .categoryContainer {
     margin-bottom: 8px;
+
+    .starIcon {
+      width: 20px;
+      height: 20px;
+      margin-left: 7px;
+    }
 
     .linkWithStar {
       display: flex;
@@ -404,7 +404,7 @@ html, body {
       text-align: right;
       width: 100%;
     }
-
+    
     .navLink {
       font-family: Arial, sans-serif;
       font-size: 15px;
@@ -414,12 +414,6 @@ html, body {
       &:hover {
         text-decoration: underline;
       }
-    }
-
-    .starIcon {
-      width: 20px;
-      height: 20px;
-      margin-left: 7px;
     }
 
     .subCategoryLink {
