@@ -114,6 +114,36 @@ html, body {
     }
   }
 }
+// lists for heroes and literature
+.heroesList {
+  list-style-type: none;
+
+  li {
+    position: relative; 
+    margin-bottom: 5px; 
+    padding-left: 10px; 
+
+    &:before {
+      content: "★"; 
+      position: absolute; 
+      color: rgb(120, 2, 2); 
+      font-size: 1.2em;
+      top: 42%; 
+      left: -15px; 
+      transform: translateY(-50%);
+    }
+
+    a {
+      color: #373c2a;
+      text-decoration: none; 
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
   
   .searchFormContainer {
     display: flex;
@@ -202,18 +232,18 @@ html, body {
   list-style-type: none;
 
   li {
-    margin-bottom: 40px; 
     padding-left: 10px;
     position: relative; 
+    margin-bottom: 40px; 
 
     &:before {
       content: "★"; 
       color: rgb(120, 2, 2); 
-      font-size: 1.2em; 
       font-family: arial;
-      position: absolute;
+      font-size: 1.2em; 
       left: -15px;
       top: 11%; 
+      position: absolute;
       transform: translateY(-50%);
     }
 
@@ -233,36 +263,6 @@ html, body {
   }
 }
 
-// lists for heroes and literature
-.heroesList {
-  list-style-type: none;
-
-  li {
-    position: relative; 
-    margin-bottom: 5px; 
-    padding-left: 10px; 
-
-    &:before {
-      content: "★"; 
-      position: absolute; 
-      color: rgb(120, 2, 2); 
-      font-size: 1.2em;
-      top: 42%; 
-      left: -15px; 
-      transform: translateY(-50%);
-    }
-
-    a {
-      color: #373c2a;
-      text-decoration: none; 
-      
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
 // when clicking on an image
 
 .imageModal {
@@ -276,29 +276,29 @@ html, body {
   background-color: rgba(0,0,0,0.4); 
 }
 
+.close {
+  color: #fff;
+  top: 15px;
+  position: absolute;
+  font-size: 40px;
+  right: 35px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.caption {
+  margin: 5px 0;
+  font-size: 18px;
+  text-align: center;
+  color: #ccc;
+}
+
 .modalContent {
   margin: auto;
   display: block;
   width: 28%; 
   max-width: 400px;
   margin-top: 10%;
-}
-
-.close {
-  position: absolute;
-  top: 15px;
-  right: 35px;
-  color: #fff;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.caption {
-  text-align: center;
-  color: #ccc;
-  margin: 5px 0;
-  font-size: 18px;
 }
 
 // back button on subcategory pages

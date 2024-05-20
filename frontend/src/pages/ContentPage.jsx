@@ -76,16 +76,6 @@ const ContentPage = () =>
       .catch(error => console.error('Error fetching category title:', error));
   };
 
-  const fetchLiterature = () => 
-  {
-    fetch(`${baseUrl}/literature`)
-      .then(response => response.json())
-      .then(data => {
-        setLiterature(data);
-      })
-      .catch(error => console.error('Error fetching literature:', error));
-  };
-
   const fetchSoldiers = (currentPage) => 
   {
     fetch(`${baseUrl}/heroes/${currentPage}`)
@@ -121,20 +111,16 @@ const ContentPage = () =>
       .catch(error => console.error('Error fetching path details:', error));
   };
 
-  const fetchSubCategories = (pathName) => 
+  const fetchLiterature = () => 
   {
-    fetch(`${baseUrl}/subcategories/${pathName}`)
+    fetch(`${baseUrl}/literature`)
       .then(response => response.json())
       .then(data => {
-        setSubCategories(data.map(category => {
-          const queryParams = new URLSearchParams({ title: category.c_name_rus }).toString();
-          const link = `/site${category.link.replace(/^\/|\/$/g, '')}?${queryParams}`;
-          return { ...category, link };
-        }));
+        setLiterature(data);
       })
-      .catch(error => console.error('Error fetching subcategories:', error));
+      .catch(error => console.error('Error fetching literature:', error));
   };
-  
+
   const isSpecialLayoutNeeded = () => 
   {
     return pathInfo && (pathInfo.c_id === 45 || pathInfo.c_id === 11);
@@ -152,6 +138,20 @@ const ContentPage = () =>
     navigate(`${basePagePath}?${searchParams.toString()}`);
   };
   
+  const fetchSubCategories = (pathName) => 
+  {
+    fetch(`${baseUrl}/subcategories/${pathName}`)
+      .then(response => response.json())
+      .then(data => {
+        setSubCategories(data.map(category => {
+          const queryParams = new URLSearchParams({ title: category.c_name_rus }).toString();
+          const link = `/site${category.link.replace(/^\/|\/$/g, '')}?${queryParams}`;
+          return { ...category, link };
+        }));
+      })
+      .catch(error => console.error('Error fetching subcategories:', error));
+  };
+    
   const renderPagination = () => {
     let startPage = Math.max(currentPage - 5, 1);
     let endPage = Math.min(startPage + 9, totalNumberOfPages);
